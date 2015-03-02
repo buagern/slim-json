@@ -1,0 +1,30 @@
+{
+    "name": "buagern/slim-json",
+    "version": "0.1.0",
+    "type": "library",
+    "description": "JSON middleware for Slim PHP framework",
+    "keywords": [
+        "slim",
+        "json",
+        "middleware",
+        "view"
+    ],
+    "homepage": "https://github.com/buagern/slim-json",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Settawat Jamsai",
+            "email": "buagern@buataitom.com",
+            "homepage": "https://github.com/buagern",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Buagern\\SlimJson\\": "src"
+        }
+    }
+}
