@@ -42,14 +42,21 @@ class View extends \Slim\View {
             $status = $responseStatus;
         }
 
-        $response = $this->all();
+        //$response = $this->all();
 
-        if ( ! $this->has('error'))
+        $response = [
+            'status' => $status,
+            'error'  => ( ! $this->has('error')) ? false : $this->get('error'),
+            'data'   => $this->all(),
+        ];
+
+        if ($this->has('error'))
         {
-            $response['error'] = false;
+            //$response['error'] = false;
+            unset($response['data']['error']);
         }
 
-        $response['status'] = $status;
+        //$response['status'] = $status;
 
 		if (isset($this->data->flash) and is_object($this->data->flash))
 		{
@@ -61,7 +68,7 @@ class View extends \Slim\View {
             }
             else
             {
-                unset($response['flash']);
+                unset($response['flash'], $response['data']['flash']);
             }
 		}
 
