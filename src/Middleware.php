@@ -17,7 +17,7 @@ class Middleware extends \Slim\Middleware {
 
         $app->error(function (\Exception $e) use ($app)
         {
-            $app->render(500, [
+            return $app->render(500, [
                 'error'   => true,
                 'message' => ($e->getCode() ? '' : '(#' . $e->getCode() . ') ') . $e->getMessage(),
             ]);
@@ -25,7 +25,7 @@ class Middleware extends \Slim\Middleware {
 
         $app->notFound(function() use ($app)
         {
-            $app->render(404, [
+            return $app->render(404, [
                 'error'   => true,
                 'message' => '\'' . $app->request->getPath() . '\' is not found.',
             ]);
@@ -40,7 +40,7 @@ class Middleware extends \Slim\Middleware {
 
             if (strlen($app->response->body()) == 0)
             {
-                $app->render(500, [
+                return $app->render(500, [
                     'error'   => true,
                     'message' => 'Empty response',
                 ]);
