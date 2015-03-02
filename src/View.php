@@ -19,7 +19,7 @@ class View extends \Slim\View {
      *
      * @var int
      */
-    public $encodeOptions = 0;
+    protected $encodeOptions = 0;
 
 
     /**
@@ -28,7 +28,28 @@ class View extends \Slim\View {
      *
      * @var string
      */
-    public $contentType = 'application/json';
+    protected $contentType = 'application/json';
+
+
+    public function setEncodeOptions($encodeOptions = 0)
+    {
+        $this->encodeOptions = $encodeOptions;
+    }
+
+    public function getEncodeOptions()
+    {
+        return $this->encodeOptions;
+    }
+
+    public function setContentType($contentType = 'application/json')
+    {
+        $this->contentType = $contentType;
+    }
+
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
 
 
     public function render($status = 200, $data = null)
