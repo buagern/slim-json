@@ -50,6 +50,6 @@ class Middleware extends \Slim\Middleware {
 
     public function call()
     {
-        return $this->next->call();
+        $this->next->call();
     }
 }

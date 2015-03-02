@@ -41,14 +41,16 @@ class View extends \Slim\View {
             $status = $responseStatus;
         }
 
-        $response = $this->all();
+        $response = [
+            'status' => $status,
+            'error'  => false,
+            'data'   => $this->all(),
+        ];
 
         if ( ! $this->has('error'))
         {
             $response['error'] = false;
         }
-
-        $response['status'] = $status;
 
 		if (isset($this->data->flash) and is_object($this->data->flash))
 		{
