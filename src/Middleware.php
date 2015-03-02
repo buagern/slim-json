@@ -15,7 +15,7 @@ class Middleware extends \Slim\Middleware {
 
         $app->config('debug', false);
 
-        $app->error(function (Exception $e) use ($app)
+        $app->error(function (\Exception $e) use ($app)
         {
             $app->render(500, [
                 'error'   => true,
@@ -50,6 +50,6 @@ class Middleware extends \Slim\Middleware {
 
     public function call()
     {
-        $this->next->call();
+        return $this->next->call();
     }
 }
