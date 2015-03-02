@@ -7,6 +7,7 @@
  * @subpackage View
  * @author Settawat Jamsai <buagern@buataitom.com>
  */
+
 class View extends \Slim\View {
 
     /*
@@ -41,16 +42,14 @@ class View extends \Slim\View {
             $status = $responseStatus;
         }
 
-        $response = [
-            'status' => $status,
-            'error'  => false,
-            'data'   => $this->all(),
-        ];
+        $response = $this->all();
 
         if ( ! $this->has('error'))
         {
             $response['error'] = false;
         }
+
+        $response['status'] = $status;
 
 		if (isset($this->data->flash) and is_object($this->data->flash))
 		{
