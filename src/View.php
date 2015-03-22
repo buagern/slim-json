@@ -66,13 +66,22 @@ class View extends \Slim\View {
         $response = [
             'status' => $status,
             'error'  => ( ! $this->has('error')) ? false : $this->get('error'),
-            'data'   => $this->all(),
+            'data'   => array_filter($data = $this->all(), function ($item) use (&$data) {
+                $ret = ! preg_match('/^_/', key($data));
+                next($data);
+
+                return $ret;
+            }),
         ];
+
+        $response = $response['data'];
+        $response['error'] = ( ! $this->has('error')) ? false : $this->get('error');
+        $response['status'] = $status;
 
         if ($this->has('error'))
         {
             $response['message'] = $this->get('message');
-            unset($response['data']);
+            //unset($response['data']);
         }
 
 		if (isset($this->data->flash) and is_object($this->data->flash))

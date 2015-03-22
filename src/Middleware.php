@@ -13,14 +13,40 @@ class Middleware extends \Slim\Middleware {
     {
         $app = \Slim\Slim::getInstance();
 
+        $isDebug = $app->config('debug');
         $app->config('debug', false);
 
-        $app->error(function (\Exception $e) use ($app)
+        $app->error(function (\Exception $e) use ($app, $isDebug)
         {
-            return $app->render(500, [
+            $response = [
                 'error'   => true,
-                'message' => ($e->getCode() ? '' : '(#' . $e->getCode() . ') ') . $e->getMessage(),
-            ]);
+                'message' => ($e->getCode() ? '(#' . $e->getCode() . ') ' : '') . $e->getMessage(),
+            ];
+
+            if ($isDebug === true)
+            {
+                $response['detail'] = [];
+
+                if ($e->getCode())
+                {
+                    $response['detail']['code'] = $e->getCode();
+                }
+
+                if ($e->getFile())
+                {
+                    $response['detail']['file'] = $e->getFile();
+                }
+
+                if ($e->getLine())
+                {
+                    $response['detail']['line'] = $e->getLine();
+                }
+
+                $response['detail']['message'] = $e->getMessage();
+                $response['detail']['trace'] = $e->getTraceAsString();
+            }
+
+            return $app->render(500, $response);
         });
 
         $app->notFound(function() use ($app)
